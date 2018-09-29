@@ -1,5 +1,5 @@
-SOURCES = $(PROG).c ../../mongoose.c
-CFLAGS = -g -W -Wall -Werror -I../.. -Wno-unused-function $(CFLAGS_EXTRA) $(MODULE_CFLAGS)
+SOURCES = $(PROG).c ../../mongoose.c $(ADDITIONALSOURCES)
+CFLAGS = -g -W -Wall -I../.. -Wno-unused-function $(CFLAGS_EXTRA) $(MODULE_CFLAGS)
 
 all: $(PROG)
 

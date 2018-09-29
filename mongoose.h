@@ -1,5 +1,5 @@
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_common.h"
+#line 1 "src/mg_common.h"
 #endif
 /*
  * Copyright (c) 2004-2013 Sergey Lyubka
@@ -32,7 +32,7 @@
 
 #endif /* CS_MONGOOSE_SRC_COMMON_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platform.h"
+#line 1 "src/common/platform.h"
 #endif
 #ifndef CS_COMMON_PLATFORM_H_
 #define CS_COMMON_PLATFORM_H_
@@ -166,7 +166,7 @@
 
 #endif /* CS_COMMON_PLATFORM_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_windows.h"
+#line 1 "src/common/platforms/platform_windows.h"
 #endif
 #ifndef CS_COMMON_PLATFORMS_PLATFORM_WINDOWS_H_
 #define CS_COMMON_PLATFORMS_PLATFORM_WINDOWS_H_
@@ -352,7 +352,7 @@ unsigned int sleep(unsigned int seconds);
 #endif /* CS_PLATFORM == CS_P_WINDOWS */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_WINDOWS_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_unix.h"
+#line 1 "src/common/platforms/platform_unix.h"
 #endif
 #ifndef CS_COMMON_PLATFORMS_PLATFORM_UNIX_H_
 #define CS_COMMON_PLATFORMS_PLATFORM_UNIX_H_
@@ -500,7 +500,7 @@ typedef struct stat cs_stat_t;
 #endif /* CS_PLATFORM == CS_P_UNIX */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_UNIX_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_esp32.h"
+#line 1 "src/common/platforms/platform_esp32.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -557,7 +557,7 @@ typedef struct stat cs_stat_t;
 #endif /* CS_PLATFORM == CS_P_ESP32 */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_ESP32_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_esp8266.h"
+#line 1 "src/common/platforms/platform_esp8266.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -630,7 +630,7 @@ typedef struct stat cs_stat_t;
 #endif /* CS_PLATFORM == CS_P_ESP8266 */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_ESP8266_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_cc3100.h"
+#line 1 "src/common/platforms/platform_cc3100.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -691,7 +691,7 @@ int inet_pton(int af, const char *src, void *dst);
 #endif /* CS_PLATFORM == CS_P_CC3100 */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_CC3100_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_cc3200.h"
+#line 1 "src/common/platforms/platform_cc3200.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -828,7 +828,7 @@ int stat(const char *pathname, struct stat *st);
 #endif /* CS_PLATFORM == CS_P_CC3200 */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_CC3200_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_cc3220.h"
+#line 1 "src/common/platforms/platform_cc3220.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -952,7 +952,7 @@ int stat(const char *pathname, struct stat *st);
 #endif /* CS_PLATFORM == CS_P_CC3220 */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_CC3200_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_msp432.h"
+#line 1 "src/common/platforms/platform_msp432.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -1072,7 +1072,7 @@ int _stat(const char *pathname, struct stat *st);
 #endif /* CS_PLATFORM == CS_P_MSP432 */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_MSP432_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_tm4c129.h"
+#line 1 "src/common/platforms/platform_tm4c129.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -1144,7 +1144,7 @@ typedef struct stat cs_stat_t;
 #endif /* CS_PLATFORM == CS_P_TM4C129 */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_TM4C129_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_mbed.h"
+#line 1 "src/common/platforms/platform_mbed.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -1240,7 +1240,7 @@ in_addr_t inet_addr(const char *cp);
 #endif /* CS_PLATFORM == CS_P_MBED */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_MBED_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_nrf51.h"
+#line 1 "src/common/platforms/platform_nrf51.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -1297,7 +1297,7 @@ int gettimeofday(struct timeval *tp, void *tzp);
 #endif /* CS_PLATFORM == CS_P_NRF51 */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_NRF51_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_nrf52.h"
+#line 1 "src/common/platforms/platform_nrf52.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -1357,7 +1357,7 @@ int gettimeofday(struct timeval *tp, void *tzp);
 #endif /* CS_PLATFORM == CS_P_NRF52 */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_NRF52_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/simplelink/cs_simplelink.h"
+#line 1 "src/common/platforms/simplelink/cs_simplelink.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -1536,7 +1536,7 @@ int slfs_open(const unsigned char *fname, uint32_t flags);
 
 #endif /* CS_COMMON_PLATFORMS_SIMPLELINK_CS_SIMPLELINK_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_wince.h"
+#line 1 "src/common/platforms/platform_wince.h"
 #endif
 #ifndef CS_COMMON_PLATFORMS_PLATFORM_WINCE_H_
 #define CS_COMMON_PLATFORMS_PLATFORM_WINCE_H_
@@ -1740,7 +1740,7 @@ const char *strerror();
 #endif /* CS_PLATFORM == CS_P_WINCE */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_WINCE_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_nxp_lpc.h"
+#line 1 "src/common/platforms/platform_nxp_lpc.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -1808,7 +1808,7 @@ typedef struct stat cs_stat_t;
 #endif /* CS_PLATFORM == CS_P_NXP_LPC */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_NXP_LPC_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_nxp_kinetis.h"
+#line 1 "src/common/platforms/platform_nxp_kinetis.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -1854,7 +1854,7 @@ typedef struct stat cs_stat_t;
 #endif /* CS_PLATFORM == CS_P_NXP_KINETIS */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_NXP_KINETIS_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_pic32.h"
+#line 1 "src/common/platforms/platform_pic32.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -1906,7 +1906,7 @@ char *inet_ntoa(struct in_addr in);
 
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_PIC32_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/platform_stm32.h"
+#line 1 "src/common/platforms/platform_stm32.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -1960,7 +1960,7 @@ typedef struct stat cs_stat_t;
 #endif /* CS_PLATFORM == CS_P_STM32 */
 #endif /* CS_COMMON_PLATFORMS_PLATFORM_STM32_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/platforms/lwip/mg_lwip.h"
+#line 1 "src/common/platforms/lwip/mg_lwip.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -2044,7 +2044,7 @@ void mg_lwip_set_keepalive_params(struct mg_connection *nc, int idle,
 
 #endif /* CS_COMMON_PLATFORMS_LWIP_MG_LWIP_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/cs_md5.h"
+#line 1 "src/common/cs_md5.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -2092,7 +2092,7 @@ void cs_md5_final(unsigned char *md, cs_md5_ctx *c);
 
 #endif /* CS_COMMON_MD5_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/cs_sha1.h"
+#line 1 "src/common/cs_sha1.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -2146,7 +2146,7 @@ void cs_hmac_sha1(const unsigned char *key, size_t key_len,
 
 #endif /* CS_COMMON_SHA1_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/cs_time.h"
+#line 1 "src/common/cs_time.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -2191,7 +2191,7 @@ double cs_timegm(const struct tm *tm);
 
 #endif /* CS_COMMON_CS_TIME_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/mg_str.h"
+#line 1 "src/common/mg_str.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -2292,7 +2292,7 @@ struct mg_str mg_strstrip(struct mg_str s);
 
 #endif /* CS_COMMON_MG_STR_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/mbuf.h"
+#line 1 "src/common/mbuf.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -2394,7 +2394,7 @@ void mbuf_trim(struct mbuf *);
 
 #endif /* CS_COMMON_MBUF_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/cs_base64.h"
+#line 1 "src/common/cs_base64.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -2463,7 +2463,7 @@ int cs_base64_decode(const unsigned char *s, int len, char *dst, int *dec_len);
 
 #endif /* CS_COMMON_CS_BASE64_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/str_util.h"
+#line 1 "src/common/str_util.h"
 #endif
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -2662,7 +2662,7 @@ size_t mg_match_prefix_n(const struct mg_str pattern, const struct mg_str str);
 
 #endif /* CS_COMMON_STR_UTIL_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "common/queue.h"
+#line 1 "src/common/queue.h"
 #endif
 /* clang-format off */
 /*-
@@ -3417,7 +3417,7 @@ struct {								\
 
 #endif /* !_SYS_QUEUE_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_features.h"
+#line 1 "src/mg_features.h"
 #endif
 /*
  * Copyright (c) 2014-2016 Cesanta Software Limited
@@ -3596,7 +3596,7 @@ struct {								\
 
 #endif /* CS_MONGOOSE_SRC_FEATURES_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_net_if.h"
+#line 1 "src/mg_net_if.h"
 #endif
 /*
  * Copyright (c) 2014-2016 Cesanta Software Limited
@@ -3724,7 +3724,7 @@ int mg_if_poll(struct mg_connection *nc, double now);
 
 #endif /* CS_MONGOOSE_SRC_NET_IF_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_ssl_if.h"
+#line 1 "src/mg_ssl_if.h"
 #endif
 /*
  * Copyright (c) 2014-2016 Cesanta Software Limited
@@ -3782,7 +3782,7 @@ int mg_ssl_if_write(struct mg_connection *nc, const void *data, size_t len);
 
 #endif /* CS_MONGOOSE_SRC_SSL_IF_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_net.h"
+#line 1 "src/mg_net.h"
 #endif
 /*
  * Copyright (c) 2014 Cesanta Software Limited
@@ -4376,7 +4376,7 @@ double mg_time(void);
 
 #endif /* CS_MONGOOSE_SRC_NET_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_uri.h"
+#line 1 "src/mg_uri.h"
 #endif
 /*
  * Copyright (c) 2014 Cesanta Software Limited
@@ -4446,7 +4446,7 @@ int mg_normalize_uri_path(const struct mg_str *in, struct mg_str *out);
 #endif /* __cplusplus */
 #endif /* CS_MONGOOSE_SRC_URI_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_util.h"
+#line 1 "src/mg_util.h"
 #endif
 /*
  * Copyright (c) 2014 Cesanta Software Limited
@@ -4664,7 +4664,7 @@ struct mg_str mg_url_encode(const struct mg_str src);
 #endif /* __cplusplus */
 #endif /* CS_MONGOOSE_SRC_UTIL_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_http.h"
+#line 1 "src/mg_http.h"
 #endif
 /*
  * Copyright (c) 2014 Cesanta Software Limited
@@ -5031,7 +5031,7 @@ void mg_http_send_digest_auth_request(struct mg_connection *c,
 
 #endif /* CS_MONGOOSE_SRC_HTTP_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_http_server.h"
+#line 1 "src/mg_http_server.h"
 #endif
 /*
  * === Server API reference
@@ -5595,7 +5595,7 @@ void mg_http_reverse_proxy(struct mg_connection *nc,
 
 #endif /* CS_MONGOOSE_SRC_HTTP_SERVER_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_http_client.h"
+#line 1 "src/mg_http_client.h"
 #endif
 /*
  * === Client API reference
@@ -5660,7 +5660,7 @@ int mg_http_create_digest_auth_header(char *buf, size_t buf_len,
 #endif /* __cplusplus */
 #endif /* CS_MONGOOSE_SRC_HTTP_CLIENT_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_mqtt.h"
+#line 1 "src/mg_mqtt.h"
 #endif
 /*
  * Copyright (c) 2014 Cesanta Software Limited
@@ -5891,7 +5891,7 @@ int mg_mqtt_vmatch_topic_expression(const char *exp, struct mg_str topic);
 
 #endif /* CS_MONGOOSE_SRC_MQTT_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_mqtt_server.h"
+#line 1 "src/mg_mqtt_server.h"
 #endif
 /*
  * Copyright (c) 2014 Cesanta Software Limited
@@ -5998,7 +5998,7 @@ struct mg_mqtt_session *mg_mqtt_next(struct mg_mqtt_broker *brk,
 #endif /* MG_ENABLE_MQTT_BROKER */
 #endif /* CS_MONGOOSE_SRC_MQTT_BROKER_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_dns.h"
+#line 1 "src/mg_dns.h"
 #endif
 /*
  * Copyright (c) 2014 Cesanta Software Limited
@@ -6165,7 +6165,7 @@ void mg_set_protocol_dns(struct mg_connection *nc);
 #endif /* __cplusplus */
 #endif /* CS_MONGOOSE_SRC_DNS_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_dns_server.h"
+#line 1 "src/mg_dns_server.h"
 #endif
 /*
  * Copyright (c) 2014 Cesanta Software Limited
@@ -6262,7 +6262,7 @@ void mg_dns_send_reply(struct mg_connection *nc, struct mg_dns_reply *r);
 #endif /* MG_ENABLE_DNS_SERVER */
 #endif /* CS_MONGOOSE_SRC_DNS_SERVER_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_resolv.h"
+#line 1 "src/mg_resolv.h"
 #endif
 /*
  * Copyright (c) 2014 Cesanta Software Limited
@@ -6346,7 +6346,7 @@ int mg_resolve_from_hosts_file(const char *host, union socket_address *usa);
 #endif /* __cplusplus */
 #endif /* CS_MONGOOSE_SRC_RESOLV_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_coap.h"
+#line 1 "src/mg_coap.h"
 #endif
 /*
  * Copyright (c) 2015 Cesanta Software Limited
@@ -6514,7 +6514,7 @@ uint32_t mg_coap_compose(struct mg_coap_message *cm, struct mbuf *io);
 
 #endif /* CS_MONGOOSE_SRC_COAP_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_sntp.h"
+#line 1 "src/mg_sntp.h"
 #endif
 /*
  * Copyright (c) 2016 Cesanta Software Limited
@@ -6571,7 +6571,7 @@ struct mg_connection *mg_sntp_get_time(struct mg_mgr *mgr,
 
 #endif /* CS_MONGOOSE_SRC_SNTP_H_ */
 #ifdef MG_MODULE_LINES
-#line 1 "mongoose/src/mg_socks.h"
+#line 1 "src/mg_socks.h"
 #endif
 /*
  * Copyright (c) 2017 Cesanta Software Limited
@@ -6638,4 +6638,56 @@ struct mg_iface *mg_socks_mk_iface(struct mg_mgr *, const char *proxy_addr);
 #endif /* __cplusplus */
 
 #endif
+#endif
+#ifdef MG_MODULE_LINES
+#line 1 "src/mg_telnet.h"
+#endif
+#ifndef CS_MONGOOSE_SRC_TELNET_H_
+#define CS_MONGOOSE_SRC_TELNET_H_
+
+#ifdef MG_ENABLE_TELNET
+
+
+#include <libtelnet.h>
+
+
+
+/*
+ * Attach a built-in telnet event handler to the given connection.
+ */
+void mg_set_protocol_telnet(struct mg_connection *nc);
+
+
+enum mg_telnet_event_t {
+    MG_EV_TELNET_POLL,
+    MG_EV_TELNET_ACCEPT,
+    MG_EV_TELNET_CLOSE,
+    MG_EV_TELNET_DATA,
+};
+
+/*
+ * Callback function (telnet event handler) prototype for `mg_telnet_set_telnet_handler()`
+ *
+ * Input:
+ * - telnet_handle, used to send data with telnet_printf, telnet_raw_printf or telnet_send function
+ * - ev: event type
+ * - data: received data, in case of MG_EV_TELNET_DATA event
+ * - len: received data len
+ * - user_data: custom user data
+ * Return value: negative to close the connection
+ */
+typedef int (telnet_event_handler_cb_t)(telnet_t *telnet_handle,enum mg_telnet_event_t ev,const void *data,int len,void **user_data);
+
+
+/*
+ * Attach a a telnet event handler.
+ */
+void mg_telnet_set_telnet_handler(struct mg_connection *nc, telnet_event_handler_cb_t user_handler);
+
+
+void mg_telnet_set_default_telopt(struct mg_connection *nc,const telnet_telopt_t *default_telnet_telopt);
+
+
+#endif
+
 #endif

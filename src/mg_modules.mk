@@ -38,6 +38,7 @@ HEADERS = mg_common.h \
           mg_http.h \
           mg_http_server.h \
           mg_http_client.h \
+          mg_telnet.h \
           mg_mqtt.h \
           mg_mqtt_server.h \
           mg_dns.h \
@@ -74,6 +75,7 @@ SOURCES = $(COMMON)/mg_mem.h \
           mg_http_ssi.c \
           mg_http_webdav.c \
           mg_http_websocket.c \
+          mg_telnet.c \
           mg_util.c \
           mg_mqtt.c \
           mg_mqtt_server.c \
