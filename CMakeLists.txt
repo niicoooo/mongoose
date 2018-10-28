@@ -6,6 +6,7 @@ enable_language(C)
 project (mgTelnet)
 
 
+add_subdirectory(examples/telnet_server_linenoise/linenoise)
 add_subdirectory(libtelnet)
 
 
@@ -52,3 +53,10 @@ target_compile_options(simplestTelnetServer PUBLIC "-ggdb")
 target_compile_options(simplestTelnetServer PUBLIC "-Wall")
 target_compile_options(simplestTelnetServer PUBLIC "-Werror")
 target_link_libraries(simplestTelnetServer PUBLIC libmg)
+
+
+add_executable(telnetServerLinenoise examples/telnet_server_linenoise/telnet_server.c)
+target_compile_options(telnetServerLinenoise PUBLIC "-ggdb")
+target_compile_options(telnetServerLinenoise PUBLIC "-Wall")
+target_compile_options(telnetServerLinenoise PUBLIC "-Werror")
+target_link_libraries(telnetServerLinenoise PUBLIC libmg linenoise)
