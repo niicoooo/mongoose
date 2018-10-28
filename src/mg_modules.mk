@@ -76,6 +76,7 @@ SOURCES = $(COMMON)/mg_mem.h \
           mg_http_webdav.c \
           mg_http_websocket.c \
           mg_telnet.c \
+          mg_telnet_debug.c \
           mg_util.c \
           mg_mqtt.c \
           mg_mqtt_server.c \

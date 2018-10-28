@@ -10,38 +10,43 @@
 
 /*
  * Attach a built-in telnet event handler to the given connection.
+ * The user-defined event handler will receive following extra events:
+ *
+ * - MG_EV_TELNET_POLL: Sent to all connections on each invocation of mg_mgr_poll()
+ * - MG_EV_TELNET_ACCEPT:  a new telnet server connection is accepted by a listening connection
+ * - MG_EV_TELNET_CLOSE: a  telnet server connection is closing
+ * - MG_EV_TELNET_DATA: new data is received. Use mg_telnet_get_recv_data and mg_telnet_get_recv_size to get it.
+ * - MG_EV_TELNET_OTHER: other libtelnet receiving events
+ *
+ * Data must be sent with telnet_send & co functions.
  */
 void mg_set_protocol_telnet(struct mg_connection *nc);
 
 
-enum mg_telnet_event_t {
-    MG_EV_TELNET_POLL,
-    MG_EV_TELNET_ACCEPT,
-    MG_EV_TELNET_CLOSE,
-    MG_EV_TELNET_DATA,
-};
-
-/*
- * Callback function (telnet event handler) prototype for `mg_telnet_set_telnet_handler()`
- *
- * Input:
- * - telnet_handle, used to send data with telnet_printf, telnet_raw_printf or telnet_send function
- * - ev: event type
- * - data: received data, in case of MG_EV_TELNET_DATA event
- * - len: received data len
- * - user_data: custom user data
- * Return value: negative to close the connection
- */
-typedef int (telnet_event_handler_cb_t)(telnet_t *telnet_handle,enum mg_telnet_event_t ev,const void *data,int len,void **user_data);
+#define MG_EV_TELNET_POLL     100
+#define MG_EV_TELNET_ACCEPT   101
+#define MG_EV_TELNET_CLOSE    102
+#define MG_EV_TELNET_DATA     103
+#define MG_EV_TELNET_OTHER  104
 
 
-/*
- * Attach a a telnet event handler.
- */
-void mg_telnet_set_telnet_handler(struct mg_connection *nc, telnet_event_handler_cb_t user_handler);
+/* Set the telopt support table given to the telnet_init function. */
+void mg_telnet_set_default_telopt(struct mg_connection *nc, const telnet_telopt_t *default_telnet_telopt);
 
+/* Helper function to get the telnet_t* handle inside the event MG_EV_TELNET_* handler function. Needed to send data with the telnet_send & co functions. */
+telnet_t* mg_telnet_get_telnet_handle(struct mg_connection *nc);
 
-void mg_telnet_set_default_telopt(struct mg_connection *nc,const telnet_telopt_t *default_telnet_telopt);
+/* Helper function to get the receiving data  inside the event MG_EV_TELNET_DATA handler function. */
+const char* mg_telnet_get_recv_data(struct mg_connection *nc);
+
+/* Helper function to get the receiving data  inside the event MG_EV_TELNET_DATA handler function. */
+int mg_telnet_get_recv_size(struct mg_connection *nc);
+
+/* Helper function to get the telnet event, if needed, inside the event MG_EV_TELNET_DATA or MG_EV_TELNET_OTHER handler function. */
+telnet_event_t* mg_telnet_get_event(struct mg_connection *nc);
+
+/* Debug function. Print a libtelnet event content. */
+void mg_telnet_dump_event(telnet_t *telnet, telnet_event_t *ev);
 
 
 #endif

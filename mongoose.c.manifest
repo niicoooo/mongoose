@@ -55,3 +55,4 @@ src/common/platforms/pic32/pic32_net_if.c
 src/common/platforms/windows/windows_direct.c
 src/mg_telnet.h
 src/mg_telnet.c
+src/mg_telnet_debug.c

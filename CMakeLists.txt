@@ -3,23 +3,18 @@ find_package(PythonInterp REQUIRED)
 enable_language(C)
 
 
-project (myTelnet)
+project (mgTelnet)
 
 
-add_executable(myTelnet
-    mongoose.c mongoose.h
-    examples/simplest_telnet_server/simplest_telnet_server.c
-    libtelnet/libtelnet.c libtelnet/libtelnet.h)
+add_subdirectory(libtelnet)
 
 
-target_include_directories(myTelnet PUBLIC ${PROJECT_BINARY_DIR} libtelnet src . )
-
-
-#target_compile_options(myTelnet PUBLIC "-DCS_ENABLE_DEBUG")
-target_compile_options(myTelnet PUBLIC "-ggdb")
-target_compile_options(myTelnet PUBLIC "-Wall")
-#target_compile_options(myTelnet PUBLIC "-Werror")
-target_compile_options(myTelnet PUBLIC "-DMG_ENABLE_TELNET")
+add_library(libmg STATIC mongoose.c mongoose.h)
+target_link_libraries(libmg PUBLIC libtelnet)
+target_include_directories(libmg PUBLIC ${PROJECT_BINARY_DIR})
+target_compile_options(libmg PUBLIC "-DMG_ENABLE_TELNET")
+target_compile_options(libmg PRIVATE "-ggdb")
+#target_compile_options(libmg PUBLIC "-DCS_ENABLE_DEBUG")
 
 
 add_custom_command(OUTPUT 
@@ -33,7 +28,7 @@ add_custom_command(OUTPUT
                     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
                     DEPENDS
                     mongoose.c.manifest
-                    src/mg_telnet.c src/mg_telnet.h
+                    src/mg_telnet.c src/mg_telnet.h src/mg_telnet_debug.c
                 )
 
 
@@ -50,3 +45,10 @@ add_custom_command(OUTPUT
                     mongoose.h.manifest
                     src/mg_telnet.h
                 )
+
+
+add_executable(simplestTelnetServer examples/simplest_telnet_server/simplest_telnet_server.c)
+target_compile_options(simplestTelnetServer PUBLIC "-ggdb")
+target_compile_options(simplestTelnetServer PUBLIC "-Wall")
+target_compile_options(simplestTelnetServer PUBLIC "-Werror")
+target_link_libraries(simplestTelnetServer PUBLIC libmg)

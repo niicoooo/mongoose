@@ -7,11 +7,18 @@
 
 
 
+#define PRINTLINE    printf("Debug: %s:%i\n", __func__, __LINE__);
+
+
+
 struct mg_telnet_proto_data {
     const telnet_telopt_t *default_telnet_telopt;
     telnet_t *telnet_handle;
-    void *user_data;
-    int (*user_handler)(telnet_t *telnet_handle, enum mg_telnet_event_t ev, const void *data, int len, void **user_data);
+
+    const char* recvdata_buffer;
+    int recvdata_size;
+    telnet_event_t *event;
+    int event_id;
 };
 
 
@@ -55,13 +62,6 @@ static char *libtelnetEventToString(telnet_event_type_t type) {
 
 
 
-
-
-
-
-
-
-
 static void mg_telnet_data_destructor(void *proto_data) {
     MG_FREE(proto_data);
 }
@@ -85,35 +85,65 @@ void mg_telnet_set_default_telopt(struct mg_connection *nc, const telnet_telopt_
     proto_data->default_telnet_telopt = default_telnet_telopt;
 }
 
-void mg_telnet_set_telnet_handler(struct mg_connection *nc, int (*user_handler)(telnet_t *telnet_handle, enum mg_telnet_event_t ev, const void *data, int len, void **user_data)) {
+telnet_t* mg_telnet_get_telnet_handle(struct mg_connection *nc) {
     assert(nc);
-    assert(nc->proto_handler == mg_telnet_handler);
     struct mg_telnet_proto_data *proto_data = mg_telnet_get_proto_data(nc);
-    proto_data->user_handler = user_handler;
+    return proto_data->telnet_handle;
 }
 
+const char* mg_telnet_get_recv_data(struct mg_connection *nc) {
+    assert(nc);
+    struct mg_telnet_proto_data *proto_data = mg_telnet_get_proto_data(nc);
+    assert(proto_data->event);
+    return proto_data->event->data.buffer;
+}
+
+int mg_telnet_get_recv_size(struct mg_connection *nc) {
+    assert(nc);
+    struct mg_telnet_proto_data *proto_data = mg_telnet_get_proto_data(nc);
+    assert(proto_data->event);
+    return proto_data->event->data.size;
+}
+
+telnet_event_t* mg_telnet_get_event(struct mg_connection *nc) {
+    assert(nc);
+    struct mg_telnet_proto_data *proto_data = mg_telnet_get_proto_data(nc);
+    assert(proto_data->event);
+    return proto_data->event;
+}
 
 
 static void libtelnet_handler(telnet_t *telnet_handle, telnet_event_t *event, void *userData) {
     assert(telnet_handle);
     assert(userData);
     struct mg_connection *nc = (struct mg_connection*)userData;
-    LOG(LL_DEBUG, ("Telnet server %p: telnet event %s", nc, libtelnetEventToString(event->type)));
+
+    struct mg_telnet_proto_data *proto_data = mg_telnet_get_proto_data(nc);
+    assert(proto_data);
+
     switch(event->type) {
     case TELNET_EV_SEND:
+        LOG(LL_DEBUG, ("Telnet server %p (libtelnet): TELNET_EV_SEND sending data, len=%lu", nc, event->data.size));
+        assert(proto_data->event_id);
         mg_send(nc, event->data.buffer, event->data.size);
         break;
     case TELNET_EV_DATA:
-        LOG(LL_DEBUG, ("Telnet server %p: received data, len=%lu", nc, event->data.size));
+        LOG(LL_DEBUG, ("Telnet server %p (libtelnet): TELNET_EV_DATA received data, len=%lu", nc, event->data.size));
         assert(nc->listener);
-        struct mg_telnet_proto_data *proto_data_listener = mg_telnet_get_proto_data(nc->listener);
-        if(proto_data_listener->user_handler != NULL) {
-            if (proto_data_listener->user_handler(telnet_handle, MG_EV_TELNET_DATA, event->data.buffer, event->data.size, &nc->user_data) < 0) {
-                nc->flags |= MG_F_SEND_AND_CLOSE;
-            }
-        }
+        assert(proto_data->telnet_handle);
+        proto_data->event = event;
+        proto_data->event_id = MG_EV_TELNET_DATA;
+        mg_call(nc, nc->handler, nc->user_data, MG_EV_TELNET_DATA, NULL);
+        proto_data->event = 0;
+        proto_data->event_id = 0;
         break;
     default:
+        LOG(LL_DEBUG, ("Telnet server %p (libtelnet): other event %s", nc, libtelnetEventToString(event->type)));
+        proto_data->event = event;
+        proto_data->event_id = MG_EV_TELNET_OTHER;
+        mg_call(nc, nc->handler, nc->user_data, MG_EV_TELNET_OTHER, NULL);
+        proto_data->event = 0;
+        proto_data->event_id = 0;
         break;
     }
 }
@@ -127,68 +157,61 @@ static void mg_telnet_handler(struct mg_connection *nc, int ev, void *ev_data MG
         case MG_EV_ACCEPT: { /* New connection accepted. union socket_address * */
             char addr[32];
             mg_sock_addr_to_str(&nc->sa, addr, sizeof(addr), MG_SOCK_STRINGIFY_IP | MG_SOCK_STRINGIFY_PORT);
-            LOG(LL_INFO, ("Telnet server %p: connection from %s", nc, addr));
+            LOG(LL_DEBUG, ("Telnet server %p (mg event): MG_EV_ACCEPT connection from %s", nc, addr));
             telnet_t *telnet_handle = telnet_init(proto_data_listener->default_telnet_telopt, libtelnet_handler, 0, nc);
             if (telnet_handle == NULL) {
-                LOG(LL_INFO, ("Telnet server %p: telnet_init failed", nc));
+                LOG(LL_ERROR, ("Telnet server %p (mg event): telnet_init failed", nc));
                 const char* msg = "Server internal error. Connection closed";
                 mg_send(nc, msg, strlen(msg));
                 nc->flags |= MG_F_SEND_AND_CLOSE;
                 break;
             }
             proto_data->telnet_handle = telnet_handle;
-            if(proto_data_listener->user_handler != NULL) {
-                if (proto_data_listener->user_handler(telnet_handle, MG_EV_TELNET_ACCEPT, NULL, 0, &nc->user_data) < 0) {
-                    nc->flags |= MG_F_SEND_AND_CLOSE;
-                }
-            }
-            telnet_negotiate(telnet_handle, TELNET_WONT, TELNET_TELOPT_ECHO);
-            telnet_negotiate(telnet_handle, TELNET_DONT, TELNET_TELOPT_LINEMODE);
+            proto_data->event_id = MG_EV_TELNET_ACCEPT;
+            mg_call(nc, nc->handler, nc->user_data, MG_EV_TELNET_ACCEPT, NULL);
+            proto_data->event_id = 0;
+
+//            telnet_negotiate(telnet_handle, TELNET_WONT, TELNET_TELOPT_ECHO);
+//            telnet_negotiate(telnet_handle, TELNET_DONT, TELNET_TELOPT_LINEMODE);
         }
         break;
         case MG_EV_RECV: { /* Data has been received. int *num_bytes */
+            LOG(LL_DEBUG, ("Telnet server %p (mg event): MG_EV_RECV", nc));
             struct mbuf *io = &nc->recv_mbuf;
             assert(proto_data->telnet_handle);
+            proto_data->event_id = MG_EV_RECV;
             telnet_recv(proto_data->telnet_handle, (char *)io->buf, io->len);
+            proto_data->event_id = 0;
             mbuf_remove(io, io->len);
         }
         break;
         case MG_EV_CLOSE: { /* Connection is closed. NULL */
-            if(nc->listener) {
-                telnet_t *telnet_handle = proto_data->telnet_handle;
-                LOG(LL_INFO, ("Telnet server %p: connection closed", nc));
-                assert(proto_data->telnet_handle);
-                if(proto_data_listener->user_handler != NULL) {
-                    proto_data_listener->user_handler(telnet_handle, MG_EV_TELNET_CLOSE, NULL, 0, &nc->user_data);
-                }
-                telnet_free(telnet_handle);
-            }
+            telnet_t *telnet_handle = proto_data->telnet_handle;
+            LOG(LL_DEBUG, ("Telnet server %p (mg event): connection closed", nc));
+            assert(proto_data->telnet_handle);
+            proto_data->event_id = MG_EV_TELNET_CLOSE;
+            mg_call(nc, nc->handler, nc->user_data, MG_EV_TELNET_CLOSE, NULL);
+            proto_data->event_id = 0;
+            telnet_free(telnet_handle);
         }
         break;
         case MG_EV_POLL: { /* Sent to each connection on each mg_mgr_poll() call */
-            telnet_t *telnet_handle = proto_data->telnet_handle;
-            assert(proto_data->telnet_handle);
-            if(proto_data_listener->user_handler != NULL) {
-                if (proto_data_listener->user_handler(telnet_handle, MG_EV_TELNET_POLL, NULL, 0, &nc->user_data) < 0) {
-                    nc->flags |= MG_F_SEND_AND_CLOSE;
-                }
-            }
+            LOG(LL_DEBUG, ("Telnet server %p (mg event): MG_EV_POLL", nc));
+            proto_data->event_id = MG_EV_TELNET_POLL;
+            mg_call(nc, nc->handler, nc->user_data, MG_EV_TELNET_POLL, NULL);
+            proto_data->event_id = 0;
         }
         break;
         case MG_EV_SEND: /* Data has been written to a socket. int *num_bytes */
             break;
         default:
-            LOG(LL_INFO, ("Telnet server %p: other event %i", nc, ev));
-            if (nc->handler != NULL) {
-                nc->handler(nc, ev, ev_data);
-            }
+            LOG(LL_DEBUG, ("Telnet server %p (mg event): other event %i", nc, ev));
+            mg_call(nc, nc->handler, nc->user_data, ev, ev_data);
             break;
         }
     } else {
-        LOG(LL_INFO, ("Telnet server %p: other event %i (no connection)", nc, ev));
-        if (nc->handler != NULL) {
-            nc->handler(nc, ev, ev_data);
-        }
+        LOG(LL_DEBUG, ("Telnet server %p (mg event): other mg event %i (no connection)", nc, ev));
+        mg_call(nc, nc->handler, nc->user_data, ev, ev_data);
     }
 }
 
